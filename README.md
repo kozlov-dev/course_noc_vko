@@ -1,5 +1,4 @@
-# course_noc_vko_cpp
- Introduction to OOP
+#  Introduction to OOP
 
 tasks 3.1
 Модифициоровать класс для работы с дробными числами.
