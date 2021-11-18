@@ -41,7 +41,7 @@ public:
     }
     ~Fr()
     {
-        delete ;
+        // delete ;
     }
 
     double get_num()
