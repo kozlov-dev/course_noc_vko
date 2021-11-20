@@ -16,27 +16,25 @@ using namespace std;
 struct Node
 {
     int data;
-    Node* next;
+    Node *next;
 };
 class List
 {
 private:
-    //Node* current;     //Указатель на текущую позицию списка
-    Node* ptr_begin;   //Указатель на первый элемент списка
-    Node* ptr_end;     //Указатель на крайний элемент списка
+    Node *ptr_begin;   //Указатель на первый элемент списка "голова"
+    Node *ptr_end;     //Указатель на крайний элемент списка "хвост"
     int count_element; //Счетчик элементов
 
 public:
     List() // Конструктор списка
     {
-        //current = nullptr;
         ptr_begin = nullptr;
         ptr_end = nullptr;
         count_element = 0;
     }
     // ~List()
     // {
-    // }
+    // // }
     void show();           //Вывод элементов списка
     int count();           //Получение количества элементов списка
     void append(int);      //Добавление элементов в конец списка
@@ -48,10 +46,10 @@ public:
     void pop(int);         //Удаление элемента на указанной позиции
     void clearreange();    //Удаление элементов в диапозоне между двумя указанными позициями
 };
-void List::show() //Вывод элементов списка
+void List::show() //+Вывод элементов списка
 {
     std::cout << "/* show */" << std::endl;
-    Node* ptr = ptr_begin;
+    Node *ptr = ptr_begin;
     if (ptr == nullptr)
     {
         std::cout << "list is empty" << std::endl;
@@ -64,65 +62,59 @@ void List::show() //Вывод элементов списка
             ptr = ptr->next;
         }
     }
-
 }
-int List::count() //Получение количества элементов списка
+int List::count() //+Получение количества элементов списка
 {
     std::cout << count_element << std::endl;
     return count_element;
 }
 void List::append(int val) //Добавление элементов в конец списка
 {
-    Node* new_Node = new Node;
+    Node *new_Node = new Node;
 
     new_Node->data = val;
+    new_Node->next = nullptr;
 
-    if (ptr_begin == nullptr) {
+    if (ptr_begin == nullptr) //если создаем первый узел
+    {
         ptr_begin = new_Node;
-        ptr_end = new_Node;
-        return;
     }
-    ptr_end->next = new_Node;
-    ptr_end = new_Node;
+    else //если не первый узел
+    {
+        Node *ptr = ptr_begin;
 
-    //if (new_Node->next == nullptr)
-    //{
-    //    ptr_begin = new_Node;
-    //}
-    //current = new_Node;
-    //ptr_end = new_Node; // Сохраняем адрес последнего элемента
-    //// ptr_begin = current;
+        while (ptr->next != nullptr) //ищем в цикле предшествующий последнему узел
+        {
+            ptr = ptr->next;
+        }
 
+        ptr->next = new_Node;
+    }
     count_element++;
 }
 void List::appbegin(int val) //Добавление элементов в начало списка--
 {
-    Node* new_Node = new Node;
 
-    
+    Node *new_Node = new Node;
+
     new_Node->data = val;
     new_Node->next = ptr_begin; // новая нода ссылается на старое начало
-
-    //current->next = ptr_begin->next;
-    //current = new_Node->;// текущий указатель становиться новым указателем
-
-    ptr_begin = new_Node;
-    
+    ptr_begin = new_Node;       // Делаем новую ноду новым началом
     count_element++;
 }
 void List::clear() //Удаление всех элементов
 {
-    Node* temp = ptr_end;
-    while (temp)
+    Node *ptr = ptr_end;
+    while (ptr)
     {
-        ptr_end = temp->next;
-        delete temp;
-        temp = ptr_end;
+        ptr_end = ptr->next;
+        delete ptr;
+        ptr = ptr_end;
         count_element--;
     }
-    //current = nullptr;
-    //ptr_end = current;
-    //ptr_end = current;
+    // current = nullptr;
+    // ptr_end = current;
+    // ptr_end = current;
     std::cout << "clear" << std::endl;
     std::cout << "count_element " << count_element << std::endl;
 }
@@ -147,32 +139,32 @@ void List::insert(int position, int val) //Вставление элемента
     if (position <= count_element && !(position < 0))
     {
 
-    //    Node* new_Node = new Node;
+        //    Node* new_Node = new Node;
 
-    //    //Node* ptr_current = current;
-    //    Node* ptr_post = current;
+        //    //Node* ptr_current = current;
+        //    Node* ptr_post = current;
 
-    //    int index = 0;
-    //    while (ptr_current)
-    //    {
-    //        ptr_current = ptr_current->next;
+        //    int index = 0;
+        //    while (ptr_current)
+        //    {
+        //        ptr_current = ptr_current->next;
 
-    //        if (index == position)
-    //        {
-    //            ptr_current = ptr_post; //смотрим на прошлую ноду
+        //        if (index == position)
+        //        {
+        //            ptr_current = ptr_post; //смотрим на прошлую ноду
 
-    //            new_Node->next = ptr_current->next; // новая нода ссылется на последующую ноду
-    //            new_Node->data = val;
+        //            new_Node->next = ptr_current->next; // новая нода ссылется на последующую ноду
+        //            new_Node->data = val;
 
-    //            ptr_current->next = new_Node; //старая нода ссылается на новую ноду
-    //        }
-    //        ptr_post = current;
-    //        index++;
-    //    }
-    //}
-    //else
-    //{
-    //    std::cout << "/* выход за диапозон*/" << std::endl;
+        //            ptr_current->next = new_Node; //старая нода ссылается на новую ноду
+        //        }
+        //        ptr_post = current;
+        //        index++;
+        //    }
+        //}
+        // else
+        //{
+        //    std::cout << "/* выход за диапозон*/" << std::endl;
     }
 
     void pop_begin();    //Удаление первого элемента списка
@@ -210,12 +202,12 @@ int main()
     list.clear();
     list.show();
     list.count();
-    /*******************************************************************************************/
-    list.appbegin(2222);
-    list.appbegin(2222);
+    // /*******************************************************************************************/
+    // list.appbegin(2222);
+    // list.appbegin(2222);
 
-    std::cout << "*****insert*****" << std::endl;
+    // std::cout << "*****insert*****" << std::endl;
 
-    list.insert(2, 555);
-    list.show();
+    // list.insert(2, 555);
+    // list.show();
 }
