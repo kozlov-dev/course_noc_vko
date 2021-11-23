@@ -1,8 +1,8 @@
 #  **Introduction to OOP**
 
 ## 1.Intro
-  - [x] https://www.codewars.com/kata/5bb3e299484fcd5dbb002912
-  - [x] https://www.codewars.com/kata/5aba780a6a176b029800041c
+  - [x] task1.1
+  - [x] task1.2
 ------   
  ## 2.Introduction to OOP. Encapsulation, constructors
 tasks 2
