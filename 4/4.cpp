@@ -1,56 +1,49 @@
 ﻿/*
-* @file 4.cpp
-* @author kozlov alex(kozlov_a0@mail.ru)
-* @brief
-* @version 0.1
-* @date 2021-11-18
-*
-* @copyright Copyrig;ht (c) 2021
-*
-* 4. Inheritance
-* Создайте иерархию классов на основе класса Фигура.
-* Должны быть описаны классы Квадрат, Прямоугольник, Треугольник, Круг, Куб, Шар.
-* --Реализовать конструкторы,
-* --Методы, выводящие информацию о фигуре(название и тип),
-* --Методы, считающие площадь, периметр и объем(где он есть)
-*/
+ * 4. Inheritance
+ * Создайте иерархию классов на основе класса Фигура.
+ * Должны быть описаны классы Квадрат, Прямоугольник, Треугольник, Круг, Куб, Шар.
+ * --Реализовать конструкторы,
+ * --Методы, выводящие информацию о фигуре(название и тип),
+ * --Методы, считающие площадь, периметр и объем(где он есть)
+ */
 
 #include <iostream>
 // #include <windows.h>
 using namespace std;
 
+#define FIGURE_TYPE_UNDEFINED 0
+#define FIGURE_TYPE_SQUARE 1
+#define FIGURE_TYPE_RECTANGLE 2
+#define FIGURE_TYPE_TRIANGLE 3
+#define FIGURE_TYPE_CIRCLE 4
+#define FIGURE_TYPE_CUBE 5
+#define FIGURE_TYPE_BALL 6
+
 class Figure //Базовый класс
 {
-private:
-	// double x, y; // начальные координаты
-
 protected:
 	string name;
-	string type;
+	int type;
 
 public:
-	Figure(string _name, string _type)
+	Figure(string _name)
 	{
 		name = _name;
-		type = _type;
+		type = FIGURE_TYPE_UNDEFINED;
 	}
 	~Figure() { std::cout << " Figure destructor " << std::endl; }
 
-	//Реализуем виртуальные методы базового  класса
+	//Реализуем методы базового  класса
 	string get_name()
 	{
 		std::cout << name << std::endl;
 		return name;
 	}
-	string get_type()
+	int get_type()
 	{
 		std::cout << type << std::endl;
 		return type;
 	}
-	// В данный момент непонятно, что за фигура и какие у нее параметры, поэтому функции возвращают 0
-	double calc_area() const { return 0; }
-	double calc_perimeter() const { return 0; }
-	double calc_volume() const { return 0; }
 };
 
 class Square : public Figure //Класс-потомок (Квадрат)
@@ -59,191 +52,144 @@ private:
 	double a;
 
 public:
-	Square(string _name, double side_a) : Figure(name, type)
+	Square(string _name, double side_a) : Figure(_name)
 	{
-		std::cout << "  Square " << std::endl;
-		string type = "Квадрат";
-		this->a = side_a;
-	};
-
-	string get_name()
-	{
-		return name;
+		type = FIGURE_TYPE_SQUARE;
+		a = side_a;
 	}
-	string get_type()
-	{
-		return name;
-	}
+	~Square() { std::cout << " Rectangle destructor  " << std::endl; }
 	double calc_area()
 	{
-		cout << a * a << endl;
+		cout << "Square area = " << a * a << endl;
 		return a * a;
-		// Figure::calc_area(a);
 	}
+
 	double calc_perimeter()
 	{
-		cout << 4 * a << endl;
+		cout << "Square perimeter = " << 4 * a << endl;
 		return 4 * a;
-		// Figure::calc_perimeter(a);
 	}
 };
-/*
+
 class Rectangle : public Figure
 {
 private:
 	double a, b;
 
 public:
-	Rectangle( string name, string type, double side_a, double side_b) : Figure(name, type)
+	Rectangle(string _name, double side_a, double side_b) : Figure(_name)
 	{
-		std::cout << " Rectangle " << std::endl;
-		this->a = side_a;
-		this->b = side_b;
-	};
+		type = FIGURE_TYPE_RECTANGLE;
+		a = side_a;
+		b = side_b;
+	}
 	~Rectangle() { std::cout << " Rectangle destructor  " << std::endl; }
 
-	string get_name()
-	{
-		return name;
-	}
-	string get_type()
-	{
-		return name;
-	}
 	// Реализация методов
 	double calc_area()
 	{
-		cout << a * b << endl;
+		cout << "Rectangle area = " << a * b << endl;
 		return a * b;
 	}
 
 	double calc_perimeter()
 	{
+		cout << "Rectangle perimeter = " << a * b << endl;
+
 		cout << 2 * (a + b) << endl;
 		return 2 * (a + b);
 	}
 };
-
-class Triangle : Figure
+class Triangle : public Figure
 {
 private:
-	double a, b, c;
+	double a, b, с;
 
 public:
-	Triangle( string name, string type, double side_a, double side_b, double side_c) : Figure(name, type)
+	Triangle(string _name, double side_a, double side_b, double side_с) : Figure(_name)
 	{
-		std::cout << "Triangle" << std::endl;
-		this->a = side_a;
-		this->b = side_b;
-		this->c = side_c;
-	};
-	~Triangle() { std::cout << " Triangle destructor " << std::endl; }
+		type = FIGURE_TYPE_TRIANGLE;
+		a = side_a;
+		b = side_b;
+		с = side_с;
+	}
+	~Triangle() { std::cout << " Triangle destructor  " << std::endl; }
 
-	string get_name()
-	{
-		return name;
-	}
-	string get_type()
-	{
-		return type;
-	}
 	// Реализация методов
 	double calc_area()
 	{
-		cout << 0.5 * (a * b) << endl;
+		cout << "Triangle area = " << 0.5 * (a * b) << endl;
 		return 0.5 * (a * b);
 	}
 
 	double calc_perimeter()
 	{
-		cout << a + b + c << endl;
-		return a + b + c;
+		cout << "Triangle perimeter = " << a + b + с << endl;
+		return a + b + с;
 	}
 };
-class Circle : Figure
+
+class Circle : public Figure
 {
 private:
 	double r;
 
 public:
-	Circle( string name, string type, double side_r) : Figure(name, type)
+	Circle(string _name, double side_r) : Figure(_name)
 	{
-		std::cout << "  Circle " << std::endl;
-		this->r = side_r;
-	};
-	~Circle() { std::cout << " Circle destructor " << std::endl; }
+		type = FIGURE_TYPE_CIRCLE;
+		r = side_r;
+	}
+	~Circle() { std::cout << " Circle destructor  " << std::endl; }
 
-	string get_name()
-	{
-		return name;
-	}
-	string get_type()
-	{
-		return type;
-	}
 	// Реализация методов
 	double calc_area()
 	{
-		cout << 3.14 * r << endl;
+		cout << "Circle area = " << 3.14 * r << endl;
 		return 3.14 * r;
 	}
 
 	double calc_perimeter()
 	{
-		cout << 2 * r * 3.14 << endl;
+		cout << "Circle perimeter = " << 2 * r * 3.14 << endl;
 		return 2 * r * 3.14;
 	}
 };
 
-class Cube : Figure
+class Cube : public Figure
 {
 private:
 	double s;
 
 public:
-	Cube( string name, string type, double side_s) : Figure(name, type)
+	Cube(string _name, double side_s) : Figure(_name)
 	{
-		std::cout << "  Circle " << std::endl;
-		this->s = side_s;
-	};
-	~Cube() { std::cout << " Circle destructor " << std::endl; }
+		type = FIGURE_TYPE_CUBE;
+		s = side_s;
+	}
+	~Cube() { std::cout << " Cube destructor  " << std::endl; }
 
-	string get_name()
-	{
-		return name;
-	}
-	string get_type()
-	{
-		return type;
-	}
 	// Реализация методов
 	double calc_volume()
 	{
-		cout << s * s * s << endl;
+		cout << "Cube volume = " << s * s * s << endl;
 		return s * s * s;
 	}
 };
 
-class Ball : Figure
+class Ball : public Figure
 {
 private:
 	double r;
 
-	Ball( string name, string type, double side_r) : Figure(name, type)
+public:
+	Ball(string _name, double side_r) : Figure(_name)
 	{
-		std::cout << "  Ball " << std::endl;
-		this->r = side_r;
-	};
-	~Ball() { std::cout << " Ball destructor " << std::endl; }
+		type = FIGURE_TYPE_CUBE;
+		r = side_r;
+	}
+	~Ball() { std::cout << " Ball destructor  " << std::endl; }
 
-	string get_name()
-	{
-		return name;
-	}
-	string get_type()
-	{
-		return type;
-	}
 	// Реализация методов
 	double calc_volume()
 	{
@@ -251,38 +197,43 @@ private:
 		return (4 / 3) * (3.14 * (r * r * r));
 	}
 };
- */
 int main()
 {
-	system("chcp 1251");
-
-	Square s("Фигура 1", 1.1);
+	Square s("Square 1", 1.1);
 	s.get_name();
 	s.get_type();
 	s.calc_area();
 	s.calc_perimeter();
-	
-	/*
 
-	Rectangle r("Фигура 2", "Прямоугольник", 2.1, 2.2);
+	Rectangle r("Rectangle 2", 2.1, 2.2);
 	r.get_name();
 	r.get_type();
 	r.calc_area();
 	r.calc_perimeter();
 
-	Triangle t("Фигура 3", "Треугольник", 3.1, 3.2, 3.3);
+	Triangle t("Triangle 3", 3.1, 3.2, 3.3);
 	t.get_name();
 	t.get_type();
 	t.calc_area();
 	t.calc_perimeter();
 
-	Circle c("Фигура 4", "Круг", 4);
-	r.get_name();
-	r.get_type();
-	r.calc_area();
-	r.calc_perimeter();
-	*/
+	Circle c("Circle 4", 4);
+	c.get_name();
+	c.get_type();
+	c.calc_area();
+	c.calc_perimeter();
 
-		std::cout << "  finish " << std::endl;
+	Cube cb("Cube 5", 5);
+	cb.get_name();
+	cb.get_type();
+	cb.calc_volume();
+
+	Ball b("Ball 6", 6);
+
+	b.get_name();
+	b.get_type();
+	b.calc_volume();
+
+	std::cout << "  finish " << std::endl;
 	return 0;
 }
