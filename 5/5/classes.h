@@ -1,6 +1,8 @@
 #pragma once
+
 #include <iostream>
 #include <string>
+
 
 using namespace std;
 
@@ -22,8 +24,8 @@ public:
 	Figure(string);
 	~Figure() { std::cout << " Figure destructor " << std::endl; }
 	//Реализуем методы базового  класса
-	string get_name();
-	int get_type();
+	virtual string get_name();
+	virtual int get_type();
 	virtual double calc_area();
 
 };
@@ -56,7 +58,7 @@ public:
 class Triangle : public Figure
 {
 private:
-	double a, b, с;
+	double a, b, c ;
 
 public:
 	Triangle(string, double, double, double);

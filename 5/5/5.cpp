@@ -1,5 +1,4 @@
-﻿#pragma once
-/*
+﻿/*
 Для прошлого задания
 (
 	Создайте иерархию классов на основе класса Фигура.
@@ -25,7 +24,7 @@ using namespace std;
 
 //f n p
 
-const int max_num = 100;
+//const int max_num = 100;
 //int generate_date(string file_name)
 //{
 //	const int number_of_name = 9;

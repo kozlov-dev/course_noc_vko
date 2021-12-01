@@ -20,7 +20,7 @@ int Figure::get_type()
 	std::cout << type << std::endl;
 	return type;
 }
-virtual double calc_area() {};
+ double Figure::calc_area() {return 0;}
 
 //------------------------------------------------------------------------
 Square::Square(string _name, double side_a) : Figure(_name)
@@ -59,12 +59,12 @@ double Rectangle::calc_perimeter()
 	return 2 * (a + b);
 }
 //------------------------------------------------------------------------
-Triangle::Triangle(string _name, double side_a, double side_b, double side_с) : Figure(_name)
+Triangle::Triangle(string _name, double side_a, double side_b, double side_c) : Figure(_name)
 {
 	type = FIGURE_TYPE_TRIANGLE;
 	a = side_a;
 	b = side_b;
-	с = side_с;
+	c = side_c;
 }
 // Реализация методов
 double Triangle::calc_area()
@@ -74,8 +74,8 @@ double Triangle::calc_area()
 }
 double Triangle::calc_perimeter()
 {
-	std::cout << "Triangle perimeter = " << a + b + с << endl;
-	return a + b + с;
+	std::cout << "Triangle perimeter = " << a + b + c << endl;
+	return a + b + c;
 }
 //------------------------------------------------------------------------
 Circle::Circle(string _name, double side_r) : Figure(_name)
