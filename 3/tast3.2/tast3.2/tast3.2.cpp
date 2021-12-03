@@ -1,27 +1,15 @@
-﻿/*2) Реализовать односвязный список, обладающим следующим функционалом
--Добавление элементов в конец списка
--Добавление элементов в начало списка
--Вывод элементов списка
--Получение количества элементов списка
--Вставление элемента на указанную позицию
--Удаление всех элементов
--Удаление первого элемента списка
--Удаление последнего элемента списка
--Удаление элемента на указанной позиции
-*/
-
-#include <iostream>
+﻿#include <iostream>
 using namespace std;
 struct Node
 {
 	int data;
-	Node* next;
+	Node *next;
 };
 class List
 {
 private:
-	Node* ptr_begin;  //Указатель на первый элемент списка "голова"
-	Node* ptr_end;	  //Указатель на крайний элемент списка "хвост"
+	Node *ptr_begin;  //Указатель на первый элемент списка "голова"
+	Node *ptr_end;	  //Указатель на крайний элемент списка "хвост"
 	int size_element; //Счетчик элементов
 
 public:
@@ -36,21 +24,21 @@ public:
 		cout << "destructor" << endl;
 		clear();
 	}
-	void show();			   //+Вывод элементов списка
-	int size();				   //+Получение количества элементов списка
-	void push_back(int);	   //+Добавление элементов в конец списка
-	void push_front(int);	   //+Добавление элементов в начало списка
-	void clear();			   //+Удаление всех элементов
-	void pop_front();		   //+Удаление первого элемента списка
-	void pop_end();			   //+Удаление последнего элемента списка
-	void insert(int, int);	   //Вставление элемента на указанную позицию
-	void pop(int);			   //Удаление элемента на указанной позиции
+	void show();		   //+Вывод элементов списка
+	int size();			   //+Получение количества элементов списка
+	void push_back(int);   //+Добавление элементов в конец списка
+	void push_front(int);  //+Добавление элементов в начало списка
+	void clear();		   //+Удаление всех элементов
+	void pop_front();	   //+Удаление первого элемента списка
+	void pop_end();		   //+Удаление последнего элемента списка
+	void insert(int, int); //+Вставление элемента на указанную позицию
+	void pop(int);		   //+Удаление элемента на указанной позиции
 };
 void List::show() //+Вывод элементов списка
 {
 	std::cout << "/* show */" << std::endl;
 	int idx = 0;
-	Node* ptr = ptr_begin;
+	Node *ptr = ptr_begin;
 	if (ptr == nullptr)
 	{
 		std::cout << "list is empty" << std::endl;
@@ -59,7 +47,8 @@ void List::show() //+Вывод элементов списка
 	{
 		while (ptr)
 		{
-			cout << "list[" << idx << "]" << " -> " << ptr->data << endl;
+			cout << "list[" << idx << "]"
+				 << " -> " << ptr->data << endl;
 			ptr = ptr->next;
 			idx++;
 		}
@@ -73,9 +62,8 @@ int List::size() //+Получение количества элементов �
 }
 void List::push_back(int val) //Добавление элементов в конец списка
 {
-	std::cout << "push_back " << val << std::endl;
 
-	Node* new_Node = new Node;
+	Node *new_Node = new Node;
 
 	new_Node->data = val;
 	new_Node->next = nullptr;
@@ -86,7 +74,7 @@ void List::push_back(int val) //Добавление элементов в ко�
 	}
 	else //если не первый узел
 	{
-		Node* ptr = ptr_begin;
+		Node *ptr = ptr_begin;
 
 		while (ptr->next != nullptr) //ищем в цикле предшествующий последнему узел
 		{
@@ -96,12 +84,13 @@ void List::push_back(int val) //Добавление элементов в ко�
 		ptr->next = new_Node;
 	}
 	size_element++;
+	std::cout << "push_back[" << size_element << "]" << val << std::endl;
 }
 void List::push_front(int val) //Добавление элементов в начало списка--
 {
 	std::cout << "push_front " << val << std::endl;
 
-	Node* new_Node = new Node;
+	Node *new_Node = new Node;
 
 	new_Node->data = val;
 	new_Node->next = ptr_begin; // новая нода ссылается на старое начало
@@ -111,7 +100,7 @@ void List::push_front(int val) //Добавление элементов в на
 void List::clear() //Удаление всех элементов
 {
 	cout << "/* clear */" << endl;
-	Node* ptr = ptr_begin;
+	Node *ptr = ptr_begin;
 	while (ptr)
 	{
 		ptr_begin = ptr->next;
@@ -128,7 +117,7 @@ void List::clear() //Удаление всех элементов
 void List::pop_front() //+Удаление первого элемента списка
 {
 	std::cout << "pop_front" << std::endl;
-	Node* ptr = ptr_begin;
+	Node *ptr = ptr_begin;
 	if (ptr != nullptr)
 	{
 
@@ -149,8 +138,8 @@ void List::pop_end() //+Удаление последнего элемента �
 {
 	int t = 0;
 	std::cout << "pop_end" << std::endl;
-	Node* ptr = ptr_begin;
-	Node* ptr_previous = ptr_begin;
+	Node *ptr = ptr_begin;
+	Node *ptr_previous = ptr_begin;
 	if (ptr != nullptr)
 	{
 		if ((ptr->next) == nullptr) // если один элемент
@@ -189,8 +178,8 @@ void List::pop_end() //+Удаление последнего элемента �
 void List::insert(int position, int val) //Вставление элемента на указанную позицию
 {
 	std::cout << "insert_pos = " << position << "->val " << val << std::endl;
-	Node* ptr = ptr_begin;
-	Node* ptr_previous = ptr_begin;
+	Node *ptr = ptr_begin;
+	Node *ptr_previous = ptr_begin;
 
 	if (ptr == nullptr) // исходный список пуст - вставка в начало
 	{
@@ -198,11 +187,12 @@ void List::insert(int position, int val) //Вставление элемента
 	}
 	else
 	{
-		Node* new_Node = new Node;
+		Node *new_Node = new Node;
 		new_Node->data = val;
 
 		int index = 0;
-		if (index == position) { // если добавит нужно в 0 позицию
+		if (index == position)
+		{ // если добавит нужно в 0 позицию
 			this->push_front(val);
 			return;
 		}
@@ -258,8 +248,7 @@ size = 11				size = 12					12 -> 0
 													size = 13
 */
 
-
-Node* get_ptr_prev(Node* ptr, int position)
+Node *get_ptr_prev(Node *ptr, int position)
 {
 	int counter = 0;
 
@@ -269,7 +258,6 @@ Node* get_ptr_prev(Node* ptr, int position)
 		counter++;
 	}
 	return ptr;
-
 }
 //Node* getN_prev(Node* head, int n) {
 //	int counter = 0;
@@ -281,11 +269,11 @@ Node* get_ptr_prev(Node* ptr, int position)
 //}
 void List::pop(int position) //Удаление элемента на указанной позиции
 {
-	std::cout << "pop_pos = " << position << std::endl;
-	Node* ptr = ptr_begin;
-	Node* ptr_previous = ptr_begin;
+	std::cout << "pop->" << position << std::endl;
+	Node *ptr = ptr_begin;
+	Node *ptr_previous = ptr_begin;
 
-	int counter = 0;
+	int counter = -1;
 
 	if (ptr == nullptr) // пустой список
 	{
@@ -303,95 +291,101 @@ void List::pop(int position) //Удаление элемента на указа
 	}
 	else
 	{
-		while (ptr != nullptr && counter != position)
+		//while (counter != position)
+		//{
+		//	//ptr_previous = ptr;
+		//	ptr = ptr->next;
+		//	counter++;
+		//}
+		ptr_previous = get_ptr_prev(ptr_begin, position); // 1,2
+
+		if (ptr_previous->next == nullptr) // конец списка
 		{
-			ptr = ptr->next;
-			counter++;
+			pop_end();
 		}
-		std::cout << "counter = " << counter << std::endl;
+		else
+		{
+			Node *elm = ptr_previous->next; // нужный элемент
 
-		// list.size > 1
-		//ptr_previous = get_ptr_prev(ptr_begin, position); // 1,2
-		//Node* elm = ptr_previous->next;// нужный элемент
-		//ptr_previous->next = elm->next; // ссылаемся на 
-		//delete elm;
+			ptr_previous->next = elm->next; // ссылаемся на
+			delete elm;
+			size_element--;
+		}
 	}
-
-
 };
 
 int main()
 {
 	List list;
 
-	///*******************************************************************************************/
-	//std::cout << "*****push_back*****" << std::endl;
+	/*******************************************************************************************/
+	std::cout << "*****push_back*****" << std::endl;
 
-	//list.push_back(1);
-	//list.push_back(11);
-	//list.push_back(111);
-	//list.push_back(1111);
+	list.push_back(1);
+	list.push_back(11);
+	list.push_back(111);
+	list.push_back(1111);
 
-	//list.show();
-	//list.size();
-	///*******************************************************************************************/
-	//std::cout << "*****push_front*****" << std::endl;
-	//list.push_front(2222);
-	//list.push_front(222);
-	//list.push_front(22);
-	//list.push_front(2);
+	list.show();
+	list.size();
+	/*******************************************************************************************/
+	std::cout << "*****push_front*****" << std::endl;
+	list.push_front(2222);
+	list.push_front(222);
+	list.push_front(22);
+	list.push_front(2);
 
-	//list.show();
-	//list.size();
+	list.show();
+	list.size();
 
-	///*******************************************************************************************/
-	//std::cout << "*****clear*****" << std::endl;
+	/*******************************************************************************************/
+	std::cout << "*****clear*****" << std::endl;
 
-	//list.clear();
-	//list.show();
-	//list.size();
-	///*******************************************************************************************/
-	//std::cout << "*****pop_front*****" << std::endl;
-	//list.clear();
-	//list.pop_front();
-	//list.show();
-	//list.size();
+	list.clear();
+	list.show();
+	list.size();
+	/*******************************************************************************************/
+	std::cout << "*****pop_front*****" << std::endl;
+	list.clear();
+	list.pop_front();
+	list.show();
+	list.size();
 
-	//list.push_back(4444);
-	//list.pop_front();
-	//list.show();
-	//list.size();
+	list.push_back(4444);
+	list.pop_front();
+	list.show();
+	list.size();
 
-	//list.push_back(4444);
-	//list.push_back(444);
-	//list.pop_front();
-	//list.show();
-	//list.size();
-	///*******************************************************************************************/
-	//std::cout << "*****pop_end*****" << std::endl;
-	//list.clear();
-	//list.pop_end();
-	//list.show();
-	//list.size();
+	list.push_back(4444);
+	list.push_back(444);
+	list.pop_front();
+	list.show();
+	list.size();
+	/*******************************************************************************************/
+	std::cout << "*****pop_end*****" << std::endl;
+	list.clear();
+	list.pop_end();
+	list.show();
+	list.size();
 
-	//list.push_back(5555);
-	//list.pop_end();
-	//list.show();
-	//list.size();
+	list.push_back(5555);
+	list.pop_end();
+	list.show();
+	list.size();
 
-	//list.push_back(5555);
-	//list.push_back(555);
-	//list.push_back(55);
-	//list.push_back(5);
-	//list.push_back(5555);
-	//list.push_back(555);
-	//list.push_back(55);
-	//list.push_back(5);
-	//list.pop_end();
-	//list.show();
-	//list.size();
+	list.push_back(5555);
+	list.push_back(555);
+	list.push_back(55);
+	list.push_back(5);
+	list.push_back(5555);
+	list.push_back(555);
+	list.push_back(55);
+	list.push_back(5);
+	list.pop_end();
+	list.show();
+	list.size();
 
-	///*******************************************************************************************/
+	/*******************************************************************************************/
 	std::cout << "*****insert*****" << std::endl;
 	list.clear();
 	list.insert(3, 5);
@@ -430,33 +424,27 @@ int main()
 	list.insert(0, 0);
 	list.show();
 	list.size();
-	///*******************************************************************************************/
-	//std::cout << "*****pop_position*****" << std::endl;
-	//list.clear();
-	//list.pop(3);
-	//list.show();
-	//list.size();
+	/*******************************************************************************************/
+	std::cout << "*****pop_position*****" << std::endl;
+	list.clear();
+	list.pop(3);
+	list.show();
+	list.size();
 
-	//list.push_back(1);
-	//list.pop(2);
-	//list.show();
-	//list.size();
+	list.push_back(1);
+	list.pop(2);
+	list.show();
+	list.size();
 
-	//list.pop(0);
-	//list.show();
-	//list.size();
+	list.pop(0);
+	list.show();
+	list.size();
 
-	//list.push_back(11);
-	//list.pop(1);
-	//list.show();
-	//list.size();
+	list.push_back(11);
+	list.push_back(222);
+	list.pop(1);
+	list.show();
+	list.size();
 
-	//list.push_back(1);
-	//list.push_back(11);
-	//list.pop(2);
-	//list.show();
-	//list.size();
-
-
-
+ 
 }

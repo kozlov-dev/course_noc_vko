@@ -20,6 +20,8 @@ protected:
 	string name;
 	int type;
 
+	virtual std::ostream& write(std::ostream& os) const = 0;
+	virtual std::istream& read(std::istream& is) = 0;
 public:
 	Figure(string);
 	~Figure() { std::cout << " Figure destructor " << std::endl; }

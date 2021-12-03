@@ -22,19 +22,6 @@
 
 using namespace std;
 
-//f n p
-
-//const int max_num = 100;
-//int generate_date(string file_name)
-//{
-//	const int number_of_name = 9;
-//	string names[number_of_name]{ "f1","f2","f3","f4","f5","f6","f7","f8","f9" };
-//	string types[]{ "t","s" };
-//
-//	ofstream out(file_name);
-//	out << types[1] << "name" << ;
-//}
-
 int main()
 {
 

@@ -9,6 +9,7 @@
 */
 
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -102,7 +103,7 @@ int main()
 {
 	int n = 2;
 	cout << "Input n: ";
-	// cin >> n;
+	 cin >> n;
 	Figure** figures = new Figure * [n];
 	for (int i = 0; i < n; i++) {
 		figures[i] = new Cube(i + 1); // todo random;
