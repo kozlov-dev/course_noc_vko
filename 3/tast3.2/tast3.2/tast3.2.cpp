@@ -8,7 +8,6 @@
 -Удаление первого элемента списка
 -Удаление последнего элемента списка
 -Удаление элемента на указанной позиции
--Удаление элементов в диапозоне между двумя указанными позициями
 */
 
 #include <iostream>
@@ -46,7 +45,6 @@ public:
 	void pop_end();			   //+Удаление последнего элемента списка
 	void insert(int, int);	   //Вставление элемента на указанную позицию
 	void pop(int);			   //Удаление элемента на указанной позиции
-	void pop_reange(int, int); //Удаление элементов в диапозоне между двумя указанными позициями
 };
 void List::show() //+Вывод элементов списка
 {
@@ -149,6 +147,7 @@ void List::pop_front() //+Удаление первого элемента сп�
 };
 void List::pop_end() //+Удаление последнего элемента списка
 {
+	int t = 0;
 	std::cout << "pop_end" << std::endl;
 	Node* ptr = ptr_begin;
 	Node* ptr_previous = ptr_begin;
@@ -156,13 +155,14 @@ void List::pop_end() //+Удаление последнего элемента �
 	{
 		if ((ptr->next) == nullptr) // если один элемент
 		{
+			t = ptr->data;
 			ptr_begin = nullptr;
 			delete ptr;
 			if (size_element >= 0)
 			{
 				size_element--;
 			};
-
+			cout << "pop_end:" << t;
 			return;
 		}
 		while (ptr->next != nullptr) //ищем в цикле предшествующий последнему узел
@@ -172,6 +172,8 @@ void List::pop_end() //+Удаление последнего элемента �
 			ptr = ptr->next; // смещаемся в конец
 		}
 		//нашли предпоследний элемент
+		t = ptr->data;
+		cout << "pop_end:" << t;
 		ptr_previous->next = nullptr; // обрываем связь
 		delete ptr;
 		if (size_element >= 0)
@@ -200,38 +202,40 @@ void List::insert(int position, int val) //Вставление элемента
 		new_Node->data = val;
 
 		int index = 0;
-		if (index == position) {
+		if (index == position) { // если добавит нужно в 0 позицию
 			this->push_front(val);
 			return;
 		}
 		while (index != position) //ищем в цикле предшествующий position узел
 		{
-			if (ptr->next == nullptr) // если list.size() = 1
-			{
-				ptr->next = new_Node; // привязали предшедствующий элемент к новой ноде
-				new_Node->next = nullptr;
-				size_element++;
-				return;
-			}
-			else
-			{
-				ptr = ptr->next;
-			}
+			ptr_previous = ptr; // записали предшедствующий элемент в указатель предшествия
+			ptr = ptr->next;
 			index++;
 		}
-
+		//if (index == 1) // если list.size() = 1
+		////if (ptr->next == nullptr) // если list.size() = 1
+		//{
+		//	ptr->next = new_Node; // привязали предшедствующий элемент к новой ноде
+		//	new_Node->next = nullptr;
+		//	size_element++;
+		//	return;
+		//}
 		/**************--(→_→)--******************/
-		//нашли предшествующий элементч	
-		ptr_previous = ptr; // записали предшедствующий элемент в указатель предшествия
-		index++;
+		//нашли предшествующий элемент
+		//ptr_previous = ptr; // записали предшедствующий элемент в указатель предшествия
+		//index++;
+		//ptr = ptr->next;
+		if (ptr->next == nullptr) // конец списка
+		{
+			this->push_back(val);
+		}
 
 		if (index == position)
 		{
-			//ptr_previous->next = new_Node; // привязали предшедствующий элемент к новой ноде
 
-			ptr = ptr->next;
 			new_Node->next = ptr;
 			ptr_previous->next = new_Node; // привязали предшедствующий элемент к новой ноде
+			//ptr_previous->next = new_Node; // привязали предшедствующий элемент к новой ноде
 			size_element++;
 		}
 	}
@@ -253,6 +257,7 @@ show 					11 -> 4						11 -> 4
 size = 11				size = 12					12 -> 0
 													size = 13
 */
+
 
 Node* get_ptr_prev(Node* ptr, int position)
 {
@@ -279,7 +284,7 @@ void List::pop(int position) //Удаление элемента на указа
 	std::cout << "pop_pos = " << position << std::endl;
 	Node* ptr = ptr_begin;
 	Node* ptr_previous = ptr_begin;
-	
+
 	int counter = 0;
 
 	if (ptr == nullptr) // пустой список
@@ -303,7 +308,7 @@ void List::pop(int position) //Удаление элемента на указа
 			ptr = ptr->next;
 			counter++;
 		}
-		std::cout << "counter = "<< counter << std::endl;
+		std::cout << "counter = " << counter << std::endl;
 
 		// list.size > 1
 		//ptr_previous = get_ptr_prev(ptr_begin, position); // 1,2
@@ -312,10 +317,6 @@ void List::pop(int position) //Удаление элемента на указа
 		//delete elm;
 	}
 
-
-};
-void List::pop_reange(int begin, int stop) //Удаление элементов в диапозоне между двумя указанными позициями
-{
 
 };
 
@@ -391,74 +392,70 @@ int main()
 	//list.size();
 
 	///*******************************************************************************************/
-	//std::cout << "*****insert*****" << std::endl;
-	//list.clear();
-	//list.insert(3, 5);
-	//list.show();
-	//list.size();
-
-	//list.insert(0, 55);
-	//list.show();
-	//list.size();
-
-	//list.insert(1, 555);
-	//list.show();
-	//list.size();
-
-	// 	list.push_back(4444);
-	// 	list.push_back(444);
-	// 	list.push_back(44);
-	// 	list.push_back(4);
-	// 	list.size();
-	// 	list.insert(3, 5555);
-	// 	list.show();
-	// 	list.size();
-
-	// 	list.insert(3, 55555);
-	// 	list.show();
-	// 	list.size();
-
-	// 	list.insert(5, 6);
-	// 	list.show();
-	// 	list.size();
-
-	// 	list.insert(1, 1);
-	// 	list.show();
-	// 	list.size();
-
-	// 	list.insert(2, 666);
-	// 	list.show();
-	// 	list.size();
-
-	// 	list.insert(0, 0);
-	// 	list.show();
-	// 	list.size();
-	///*******************************************************************************************/
-	std::cout << "*****pop_position*****" << std::endl;
+	std::cout << "*****insert*****" << std::endl;
 	list.clear();
-	list.pop(3);
+	list.insert(3, 5);
 	list.show();
 	list.size();
 
-	list.push_back(1);
-	list.pop(2);
+	list.insert(0, 55);
 	list.show();
 	list.size();
 
-	list.pop(0);
+	list.push_back(4444);
+	list.push_back(444);
+	list.push_back(44);
+	list.push_back(4);
+	list.size();
+	list.insert(3, 5555);
 	list.show();
 	list.size();
 
-	list.push_back(11);
-	list.pop(1);
+	list.insert(3, 55555);
 	list.show();
 	list.size();
 
-	list.push_back(1);
-	list.push_back(11);
-	list.pop(2);
+	list.insert(5, 6);
 	list.show();
 	list.size();
+
+	list.insert(1, 1);
+	list.show();
+	list.size();
+
+	list.insert(2, 666);
+	list.show();
+	list.size();
+
+	list.insert(0, 0);
+	list.show();
+	list.size();
+	///*******************************************************************************************/
+	//std::cout << "*****pop_position*****" << std::endl;
+	//list.clear();
+	//list.pop(3);
+	//list.show();
+	//list.size();
+
+	//list.push_back(1);
+	//list.pop(2);
+	//list.show();
+	//list.size();
+
+	//list.pop(0);
+	//list.show();
+	//list.size();
+
+	//list.push_back(11);
+	//list.pop(1);
+	//list.show();
+	//list.size();
+
+	//list.push_back(1);
+	//list.push_back(11);
+	//list.pop(2);
+	//list.show();
+	//list.size();
 
 
 
