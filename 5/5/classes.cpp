@@ -3,24 +3,37 @@
 #include "classes.h"
 
 using namespace std;
+// Figure::Figure(string _name)
+public:
+	Figure(string name, int type) { _name = name; _type = type; }
 
-Figure::Figure(string _name)
-{
-	name = _name;
-	type = FIGURE_TYPE_UNDEFINED;
-}
-//Реализуем методы базового  класса
-string Figure::get_name()
-{
-	std::cout << name << std::endl;
-	return name;
-}
-int Figure::get_type()
-{
-	std::cout << type << std::endl;
-	return type;
-}
- double Figure::calc_area() {return 0;}
+	// абстрактные методы базового  класса
+	string get_name() const { return _name; }
+	virtual int get_type() const { return _type; }
+	virtual double calc_area() const = 0;
+	virtual double calc_perimeter() const = 0;
+
+	friend ostream& operator<<(ostream& os, const Figure& fig) { return fig.write(os); }
+	friend istream& operator>>(istream& in, Figure& fig) { return fig.read(in); }
+};
+
+// Figure::Figure(string _name)
+// {
+// 	name = _name;
+// 	type = FIGURE_TYPE_UNDEFINED;
+// }
+// //Реализуем методы базового  класса
+// string Figure::get_name()
+// {
+// 	std::cout << name << std::endl;
+// 	return name;
+// }
+// int Figure::get_type()
+// {
+// 	std::cout << type << std::endl;
+// 	return type;
+// }
+//  double Figure::calc_area() {return 0;}
 
 //------------------------------------------------------------------------
 Square::Square(string _name, double side_a) : Figure(_name)
